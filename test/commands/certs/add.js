@@ -24,7 +24,7 @@ describe('heroku certs:add', function() {
   });
 
   describe('(ported)', function() {
-    it('# adds an SSL certificate if passed --endpoint', function() {
+    it('# adds an SSL endpoint if passed --type endpoint', function() {
       nock('https://api.heroku.com')
       .get('/apps/example/ssl-endpoints')
       .reply(200, []);
