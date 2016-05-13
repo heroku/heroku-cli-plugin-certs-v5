@@ -17,17 +17,8 @@ let certificateDetails = require('../../lib/certificate_details.js')
 function Domains (domains) {
   this.domains = domains
 
-  this.hasFailed = false
-  this.added = []
-  this.failed = []
-
-  this.domains.forEach(function (domain) {
-    if (domain._failed) {
-      this.failed.push(domain)
-    } else {
-      this.added.push(domain)
-    }
-  }, this)
+  this.added = this.domains.filter((domain) => !domain._failed)
+  this.failed = this.domains.filter((domain) => domain._failed)
 
   this.hasFailed = this.failed.length > 0
 }
