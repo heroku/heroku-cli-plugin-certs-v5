@@ -424,7 +424,7 @@ bar.example.org  CNAME        bar.example.com.herokudns.com
           {'kind': 'custom', 'cname': 'biz.example.com.herokudns.com', 'hostname': 'biz.example.com'}
       )
 
-      return certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true, domains: 'foo.example.org,bar.example.org,biz.example.com'}}).then(function () {
+      return assertExit(2, certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true, domains: 'foo.example.org,bar.example.org,biz.example.com'}})).then(function () {
         mock.done()
         domainsMock.done()
         domainsCreateFoo.done()
