@@ -177,6 +177,10 @@ function * addDomains (context, heroku, meta, cert) {
         {label: 'DNS Target', key: 'cname'}
     ]})
   }
+
+  if (domains.hasFailed) {
+    error.exit(2)
+  }
 }
 
 function * run (context, heroku) {
