@@ -53,7 +53,8 @@ function * getFiles (context) {
 }
 
 function getFlagChoices (context, certDomains, existingDomains) {
-  let choices = _.difference(context.flags.domains.split(',').map((str) => str.trim()), existingDomains)
+  let flagDomains = context.flags.domains.split(',').map((str) => str.trim()).filter((str) => str !== '')
+  let choices = _.difference(flagDomains, existingDomains)
 
   let badChoices = _.remove(choices, (choice) => (!_.find(certDomains, (certDomain) => certDomain === choice)))
   badChoices.forEach(function (choice) {
@@ -78,7 +79,7 @@ function * getChoices (certDomains, newDomains, existingDomains, context) {
   if (newDomains.length === 0) {
     return []
   } else {
-    if (context.flags.domains) {
+    if (context.flags.domains !== undefined) {
       return getFlagChoices(context, certDomains, existingDomains)
     } else {
       return (yield getPromptChoices(context, certDomains, existingDomains, newDomains)).domains
@@ -137,7 +138,8 @@ function * addDomains (context, heroku, meta, cert) {
     })
 
     let label = choices.length > 1 ? 'domains' : 'domain'
-    domains = yield cli.action(`Adding ${label} ${choices.join(', ')} to ${context.app}`, {}, promise).catch(function (err) {
+    let message = `Adding ${label} ${choices.map((choice) => cli.color.green(choice)).join(', ')} to ${cli.color.app(context.app)}`
+    domains = yield cli.action(message, {}, promise).catch(function (err) {
       if (err instanceof Domains) {
         return err
       }
@@ -154,7 +156,6 @@ function * addDomains (context, heroku, meta, cert) {
   }
 
   cli.log()
-  cli.styledHeader("Your certificate has been added successfully.  Update your application's DNS settings as follows")
 
   let type = function (domain) {
     return psl.parse(domain.hostname).subdomain === null ? 'ALIAS/ANAME' : 'CNAME'
@@ -164,11 +165,18 @@ function * addDomains (context, heroku, meta, cert) {
     .filter((domain) => domain.kind === 'custom')
     .map((domain) => Object.assign({}, domain, {type: type(domain)}))
 
-  cli.table(domainsTable, {columns: [
-      {label: 'Domain', key: 'hostname'},
-      {label: 'Record Type', key: 'type'},
-      {label: 'DNS Target', key: 'cname'}
-  ]})
+  if (domainsTable.length === 0) {
+    /* eslint-disable no-irregular-whitespace */
+    cli.styledHeader(`Your certificate has been added successfully.  Add a custom domain to your app by running ${cli.color.app('heroku domains:add <yourdomain.com>')}`)
+    /* eslint-enable no-irregular-whitespace */
+  } else {
+    cli.styledHeader("Your certificate has been added successfully.  Update your application's DNS settings as follows")
+    cli.table(domainsTable, {columns: [
+        {label: 'Domain', key: 'hostname'},
+        {label: 'Record Type', key: 'type'},
+        {label: 'DNS Target', key: 'cname'}
+    ]})
+  }
 }
 
 function * run (context, heroku) {
@@ -176,7 +184,7 @@ function * run (context, heroku) {
 
   let files = yield getFiles(context)
 
-  let cert = yield cli.action(`Adding SSL certificate to ${context.app}`, {}, heroku.request({
+  let cert = yield cli.action(`Adding SSL certificate to ${cli.color.app(context.app)}`, {}, heroku.request({
     path: meta.path,
     method: 'POST',
     body: {certificate_chain: files.crt, private_key: files.key},
@@ -197,7 +205,7 @@ function * run (context, heroku) {
 
     yield addDomains(context, heroku, meta, cert)
   } else {
-    cli.log(`${context.app} now served by ${cert.cname}`)
+    cli.log(`${cli.color.app(context.app)} now served by ${cli.color.green(cert.cname)}`)
     certificateDetails(cert)
   }
 
@@ -217,6 +225,10 @@ module.exports = {
     {name: 'domains', description: 'domains to create after certificate upload', hasValue: true}
   ],
   description: 'add an SSL certificate to an app',
+  help: `Example:
+
+ $ heroku _certs:add example.com.crt example.com.key
+`,
   needsApp: true,
   needsAuth: true,
   run: cli.command(co.wrap(run))
