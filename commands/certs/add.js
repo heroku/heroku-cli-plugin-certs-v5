@@ -180,7 +180,7 @@ function * addDomains (context, heroku, meta, cert) {
           return domain.hostname === certDomain || isWildcardMatch(certDomain, domain.hostname)
         })
 
-        if (hasMatch) {
+        if (!hasMatch) {
           warning = '! Does not match any domains on your SSL certificate'
         }
       }
