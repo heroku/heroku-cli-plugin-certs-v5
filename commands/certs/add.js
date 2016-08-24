@@ -26,9 +26,27 @@ function Domains (domains) {
 }
 
 function * getMeta (context, heroku) {
-  if (context.flags.type === 'endpoint') {
+  let type = context.flags.type
+
+  if (type) {
+    switch (type) {
+      case 'endpoint':
+        return endpoints.meta(context.app, 'ssl')
+      case 'sni':
+        return endpoints.meta(context.app, 'sni')
+      default:
+        error.exit(1, "Must pass either --type with either 'endpoint' or 'sni'")
+    }
+  }
+
+  let {hasSpace, hasAddon} = yield {
+    hasSpace: endpoints.hasSpace(context.app, heroku),
+    hasAddon: endpoints.hasAddon(context.app, heroku)
+  }
+
+  if (hasSpace) {
     return endpoints.meta(context.app, 'ssl')
-  } else if (context.flags.type === 'sni' || !(yield endpoints.hasAddon(context.app, heroku))) {
+  } else if (!hasAddon) {
     return endpoints.meta(context.app, 'sni')
   } else {
     error.exit(1, "Must pass either --type with either 'endpoint' or 'sni'")
