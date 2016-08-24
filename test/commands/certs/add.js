@@ -858,14 +858,14 @@ SSL certificate is self signed.
 
     return assertExit(1, certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true}})).then(function () {
       mockAddons.done()
-      expect(cli.stderr).to.equal(" ▸    Must pass either --type with either 'endpoint' or 'sni'\n")
+      expect(cli.stderr).to.equal(" ▸    Must pass --type with either 'endpoint' or 'sni'\n")
       expect(cli.stdout).to.equal('')
     })
   })
 
   it('# errors out if type is not known', function () {
     return assertExit(1, certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true, type: 'foo'}})).then(function () {
-      expect(cli.stderr).to.equal(" ▸    Must pass either --type with either 'endpoint' or 'sni'\n")
+      expect(cli.stderr).to.equal(" ▸    Must pass --type with either 'endpoint' or 'sni'\n")
       expect(cli.stdout).to.equal('')
     })
   })

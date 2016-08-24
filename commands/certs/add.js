@@ -35,7 +35,7 @@ function * getMeta (context, heroku) {
       case 'sni':
         return endpoints.meta(context.app, 'sni')
       default:
-        error.exit(1, "Must pass either --type with either 'endpoint' or 'sni'")
+        error.exit(1, "Must pass --type with either 'endpoint' or 'sni'")
     }
   }
 
@@ -49,7 +49,7 @@ function * getMeta (context, heroku) {
   } else if (!hasAddon) {
     return endpoints.meta(context.app, 'sni')
   } else {
-    error.exit(1, "Must pass either --type with either 'endpoint' or 'sni'")
+    error.exit(1, "Must pass --type with either 'endpoint' or 'sni'")
   }
 }
 
