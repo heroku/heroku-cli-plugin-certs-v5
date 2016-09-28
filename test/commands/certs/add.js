@@ -11,6 +11,7 @@ let inquirer
 let certs
 
 let endpoint = require('../../stubs/sni-endpoints.js').endpoint
+let endpointHeroku = require('../../stubs/sni-endpoints.js').endpoint_heroku
 let endpointStables = require('../../stubs/sni-endpoints.js').endpoint_stables
 let endpointWarning = require('../../stubs/sni-endpoints.js').endpoint_warning
 let endpointWildcard = require('../../stubs/sni-endpoints.js').endpoint_wildcard
@@ -670,6 +671,44 @@ biz.example.com  CNAME        biz.example.com.herokudnsdev.com
 baz.example.org  CNAME        baz.example.org.herokudns.com
 `)
         /* eslint-enable no-trailing-spaces */
+      })
+    })
+
+    it('# does not error out if the cert CN is for the heroku domain', function () {
+      let mock = nock('https://api.heroku.com')
+        .post('/apps/example/sni-endpoints', {
+          certificate_chain: 'pem content', private_key: 'key content'
+        })
+        .reply(200, endpointHeroku)
+
+      let domainsMock = nock('https://api.heroku.com')
+        .get('/apps/example/domains')
+        .reply(200, [
+          {'kind': 'heroku', 'hostname': 'tokyo-1050.herokuapp.com', 'cname': null}
+        ])
+
+      return certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true}}).then(function () {
+        mock.done()
+        domainsMock.done()
+        expect(unwrap(cli.stderr)).to.equal('Adding SSL certificate to example... done\n')
+        /* eslint-disable no-irregular-whitespace */
+        /* eslint-disable no-trailing-spaces */
+        expect(cli.stdout).to.equal(
+          `Certificate details:
+Common Name(s): tokyo-1050.herokuapp.com
+Expires At:     2013-08-01 21:34 UTC
+Issuer:         /C=US/ST=California/L=San Francisco/O=Heroku by Salesforce/CN=heroku.com
+Starts At:      2012-08-01 21:34 UTC
+Subject:        /C=US/ST=California/L=San Francisco/O=Heroku by Salesforce/CN=tokyo-1050.herokuapp.com
+SSL certificate is self signed.
+
+=== The following common names are for hosts that are managed by heroku
+tokyo-1050.herokuapp.com
+
+=== Your certificate has been added successfully.  Add a custom domain to your app by running heroku domains:add <yourdomain.com>
+`)
+        /* eslint-enable no-trailing-spaces */
+        /* eslint-enable no-irregular-whitespace */
       })
     })
 
