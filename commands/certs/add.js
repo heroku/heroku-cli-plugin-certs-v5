@@ -122,15 +122,26 @@ function * addDomains (context, heroku, meta, cert) {
 
   let existingDomains = []
   let newDomains = []
+  let herokuDomains = []
 
   certDomains.forEach(function (certDomain) {
     let matches = findMatch(certDomain, apiDomains)
     if (matches) {
-      existingDomains.push(certDomain)
+      if (matches.kind === 'heroku') {
+        herokuDomains.push(certDomain)
+      } else {
+        existingDomains.push(certDomain)
+      }
     } else {
       newDomains.push(certDomain)
     }
   })
+
+  if (herokuDomains.length > 0) {
+    cli.log()
+    cli.styledHeader('The following common names are for hosts that are managed by heroku')
+    herokuDomains.forEach((domain) => cli.log(domain))
+  }
 
   if (existingDomains.length > 0) {
     cli.log()
