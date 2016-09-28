@@ -937,9 +937,9 @@ SSL certificate is self signed.
           .get('/apps/example/domains')
           .reply(200, [
             {'kind': 'heroku', 'hostname': 'tokyo-1050.herokuapp.com', 'cname': null, 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': null, 'status': 'succeeded'},
-            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': null, 'status': 'succeeded'},
-            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': null, 'status': 'succeeded'}
+            {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': null, 'status': 'none'},
+            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': null, 'status': 'none'},
+            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': null, 'status': 'none'}
           ])
 
         let domainsRetry = nock('https://api.heroku.com')
@@ -947,17 +947,17 @@ SSL certificate is self signed.
           .reply(200, [
             {'kind': 'heroku', 'hostname': 'tokyo-1050.herokuapp.com', 'cname': null, 'status': 'none'},
             {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': null, 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': 'bar.example.org.herokudns.com', 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': 'biz.example.com.herokudns.com', 'status': 'none'}
+            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': 'bar.example.org.herokudns.com', 'status': 'succeeded'},
+            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': 'biz.example.com.herokudns.com', 'status': 'succeeded'}
           ])
 
         let domainsSuccess = nock('https://api.heroku.com')
           .get('/apps/example/domains')
           .reply(200, [
             {'kind': 'heroku', 'hostname': 'tokyo-1050.herokuapp.com', 'cname': null, 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': 'foo.example.org.herokudns.com', 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': 'bar.example.org.herokudns.com', 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': 'biz.example.com.herokudns.com', 'status': 'none'}
+            {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': 'foo.example.org.herokudns.com', 'status': 'succeeded'},
+            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': 'bar.example.org.herokudns.com', 'status': 'succeeded'},
+            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': 'biz.example.com.herokudns.com', 'status': 'succeeded'}
           ])
 
         return certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true}}).then(function () {
@@ -1006,9 +1006,9 @@ biz.example.com  CNAME        biz.example.com.herokudns.com
           .times(31)
           .reply(200, [
             {'kind': 'heroku', 'hostname': 'tokyo-1050.herokuapp.com', 'cname': null, 'status': 'none'},
-            {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': null, 'status': 'succeeded'},
-            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': null, 'status': 'succeeded'},
-            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': null, 'status': 'succeeded'}
+            {'kind': 'custom', 'hostname': 'foo.example.org', 'cname': null, 'status': 'none'},
+            {'kind': 'custom', 'hostname': 'bar.example.org', 'cname': null, 'status': 'none'},
+            {'kind': 'custom', 'hostname': 'biz.example.com', 'cname': null, 'status': 'none'}
           ])
 
         return assert.isRejected(certs.run({app: 'example', args: {CRT: 'pem_file', KEY: 'key_file'}, flags: {bypass: true}}), /Timed out while waiting for stable domains to be created/).then(function () {
