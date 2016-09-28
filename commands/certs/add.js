@@ -115,11 +115,11 @@ function * getChoices (certDomains, newDomains, existingDomains, context) {
 
 function * getDomains (context, heroku) {
   function someNull (domains) {
-    return _.some(domains, (domain) => domain.kind === 'custom' && domain.cname == null)
+    return _.some(domains, (domain) => domain.kind === 'custom' && !domain.cname)
   }
 
-  function * apiRequest (context, heroku) {
-    return yield heroku.request({
+  function apiRequest (context, heroku) {
+    return heroku.request({
       path: `/apps/${context.app}/domains`
     })
   }
@@ -172,7 +172,7 @@ function * addDomains (context, heroku, meta, cert) {
 
   if (herokuDomains.length > 0) {
     cli.log()
-    cli.styledHeader('The following common names are for hosts that are managed by heroku')
+    cli.styledHeader('The following common names are for hosts that are managed by Heroku')
     herokuDomains.forEach((domain) => cli.log(domain))
   }
 
