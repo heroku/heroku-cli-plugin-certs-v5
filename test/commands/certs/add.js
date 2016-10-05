@@ -41,8 +41,8 @@ function mockDomains (inquirer) {
 
 function mockFile (fs, file, content) {
   fs.readFile
-    .withArgs(file, sinon.match.func)
-    .callsArgWithAsync(1, null, Buffer.from(content))
+    .withArgs(file, 'utf-8', sinon.match.func)
+    .callsArgWithAsync(2, null, content)
 }
 
 describe('heroku certs:add', function () {
