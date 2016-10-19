@@ -29,7 +29,8 @@ function * run (context, heroku) {
   certificateDetails(cert, 'New active certificate details:')
 }
 
-let cmd = {
+module.exports = {
+  topic: 'certs',
   command: 'rollback',
   flags: [
     {name: 'confirm', hasValue: true, optional: true, hidden: true},
@@ -41,9 +42,3 @@ let cmd = {
   needsAuth: true,
   run: cli.command(co.wrap(run))
 }
-
-module.exports = [
-  Object.assign({topic: 'certs'}, cmd),
-  Object.assign({topic: '_certs', hidden: true}, cmd)
-]
-
