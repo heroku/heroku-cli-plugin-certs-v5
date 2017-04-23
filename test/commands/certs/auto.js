@@ -81,8 +81,6 @@ heroku-san-test.heroku-cli-sni-test.com  OK
       {'kind': 'heroku', 'hostname': 'tokyo-1050.herokuapp.com', 'cname': null, 'acm_status': null},
       {'kind': 'custom', 'hostname': 'heroku-acm.heroku-cli-sni-test.com', 'cname': 'heroku-acm.heroku-cli-sni-test.com.herokudns.com', 'acm_status': 'ok'},
       {'kind': 'custom', 'hostname': 'heroku-san-test.heroku-cli-sni-test.com', 'cname': 'heroku-san-test.heroku-cli-sni-test.com.herokudns.com', 'acm_status': 'ok'},
-      {'kind': 'custom', 'hostname': 'heroku-in-prog.heroku-cli-sni-test.com', 'cname': 'heroku-in-prog.heroku-cli-sni-test.com.herokudns.com', 'acm_status': 'in-progress'},
-      {'kind': 'custom', 'hostname': 'heroku-verified.heroku-cli-sni-test.com', 'cname': 'heroku-verified.heroku-cli-sni-test.com.herokudns.com', 'acm_status': 'verified'},
       {'kind': 'custom', 'hostname': 'heroku-dns-verified.heroku-cli-sni-test.com', 'cname': 'heroku-dns-verified.heroku-cli-sni-test.com.herokudns.com', 'acm_status': 'dns-verified'},
       {'kind': 'custom', 'hostname': 'heroku-missing.heroku-cli-sni-test.com', 'cname': 'heroku-missing.heroku-cli-sni-test.com.herokudns.com', 'acm_status': 'failing'},
       {'kind': 'custom', 'hostname': 'heroku-unknown.heroku-cli-sni-test.com', 'cname': 'heroku-unknown.heroku-cli-sni-test.com.herokudns.com', 'acm_status': null}
@@ -103,12 +101,10 @@ Subject:        /CN=heroku-acm.heroku-cli-sni-test.com
 SSL certificate is not trusted.
 
 Domain                                       Status
-───────────────────────────────────────────  ────────────
+───────────────────────────────────────────  ───────────
 heroku-acm.heroku-cli-sni-test.com           OK
 heroku-san-test.heroku-cli-sni-test.com      OK
-heroku-in-prog.heroku-cli-sni-test.com       In Progress
-heroku-verified.heroku-cli-sni-test.com      In Progress
-heroku-dns-verified.heroku-cli-sni-test.com  DNS Verified
+heroku-dns-verified.heroku-cli-sni-test.com  In Progress
 heroku-missing.heroku-cli-sni-test.com       Failing
 heroku-unknown.heroku-cli-sni-test.com       Waiting
 
