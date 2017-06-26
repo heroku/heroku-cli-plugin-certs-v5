@@ -50,7 +50,7 @@ Example:
 
     $ heroku certs:update example.com.crt example.com.key
 
-Certificate Intermediary Example:
+Example (Certificate Intermediary) :
 
     $ heroku certs:update intermediary.crt example.com.crt example.com.key
 `,
