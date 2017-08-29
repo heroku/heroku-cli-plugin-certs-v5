@@ -25,5 +25,9 @@ module.exports = {
   needsApp: true,
   needsAuth: true,
   variableArgs: true,
-  run: cli.command(co.wrap(run))
+  run: cli.command(co.wrap(run)),
+  help: `Example:
+
+    $ heroku certs:chain aug2017.pem --app murmuring-headland-14719
+    Resolving trust chain... !`
 }

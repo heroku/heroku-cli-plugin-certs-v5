@@ -18,5 +18,9 @@ module.exports = {
   description: 'Refresh ACM for an app.',
   needsApp: true,
   needsAuth: true,
-  run: cli.command(co.wrap(run))
+  run: cli.command(co.wrap(run)),
+  help: `Example:
+
+    $ heroku certs:auto:refresh --app murmuring-headland-14719
+    Refreshing Automatic Certificate Management... !`
 }

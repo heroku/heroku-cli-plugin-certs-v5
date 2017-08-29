@@ -3,7 +3,12 @@
 let _ = require('lodash')
 
 exports.topics = [
-  {name: 'certs', description: 'a topic for the ssl plugin'},
+  {
+    name: 'certs',
+    description: 'a topic for the ssl plugin',
+    overview: `SSL is a cryptographic protocol that provides end-to-end encryption and integrity for all web requests. Apps that transmit sensitive data should enable SSL to ensure all information is transmitted securely.
+To enable SSL on a custom domain, for example, www.example.com, use the SSL Endpoint add-on.
+SSL Endpoint is a paid add-on service. Please keep this in mind when provisioning the service`},
   {name: '_certs', hidden: true}
 ]
 

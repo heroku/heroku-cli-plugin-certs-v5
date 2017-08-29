@@ -27,5 +27,8 @@ module.exports = {
   description: 'show certificate information for an SSL certificate',
   needsApp: true,
   needsAuth: true,
-  run: cli.command(co.wrap(run))
+  run: cli.command(co.wrap(run)),
+  help: `Example:
+
+    $ heroku certs:info --app murmuring-headland-14719`
 }
