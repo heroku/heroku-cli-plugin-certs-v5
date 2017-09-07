@@ -40,5 +40,8 @@ module.exports = {
   description: 'rollback an SSL certificate from an app',
   needsApp: true,
   needsAuth: true,
-  run: cli.command(co.wrap(run))
+  run: cli.command(co.wrap(run)),
+  help: `Example:
+
+    $ heroku certs:rollback --app signed_cert murmuring-headland-14719`
 }

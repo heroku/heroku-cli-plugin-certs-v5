@@ -21,5 +21,10 @@ module.exports = {
   description: 'List SSL certificates for an app.',
   needsApp: true,
   needsAuth: true,
-  run: cli.command(co.wrap(run))
+  run: cli.command(co.wrap(run)),
+  help: `Example:
+
+    $ heroku certs --app murmuring-headland-14719
+    ⬢ murmuring-headland-14719 has no SSL certificates.
+    Use heroku certs:add CRT KEY to add one.`
 }
