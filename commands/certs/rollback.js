@@ -20,9 +20,11 @@ function * run (context, heroku) {
   yield cli.confirmApp(context.app, context.flags.confirm, `Potentially Destructive Action\nThis command will change the certificate of endpoint ${formattedEndpoint} from ${cli.color.app(context.app)}.`)
 
   let cert = yield cli.action(`Rolling back SSL certificate ${formattedEndpoint} for ${cli.color.app(context.app)}`, {}, heroku.request({
-    path: `/apps/${context.app}/ssl-endpoints/${encodeURIComponent(endpoint.cname)}/rollback`,
+    path: `/apps/${context.app}/ssl-endpoints/${encodeURIComponent(endpoint.cname)}`,
     method: 'POST',
-    headers: {'X-Heroku-API-Version': '2', 'Accept': 'application/json'}
+    body: {
+      rollback: true
+    }
   }))
 
   displayWarnings(cert)
