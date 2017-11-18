@@ -21,7 +21,8 @@ function * run (context, heroku) {
 
   let cert = yield cli.action(`Rolling back SSL certificate ${formattedEndpoint} for ${cli.color.app(context.app)}`, {}, heroku.request({
     path: `/apps/${context.app}/ssl-endpoints/${encodeURIComponent(endpoint.cname)}`,
-    method: 'POST',
+    method: 'PATCH',
+    headers: {'Accept': 'application/vnd.heroku+json; version=3.ssl_cert'},
     body: {
       rollback: true
     }

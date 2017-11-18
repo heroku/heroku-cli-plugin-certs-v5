@@ -55,8 +55,10 @@ describe('heroku certs:rollback', function () {
   })
 
   let callback = function (path, endpoint) {
-    return nock('https://api.heroku.com')
-      .post('/apps/example/ssl-endpoints/tokyo-1050.herokussl.com', {
+    return nock('https://api.heroku.com', {
+      reqheaders: {'Accept': 'application/vnd.heroku+json; version=3.ssl_cert'}
+    })
+      .patch('/apps/example/ssl-endpoints/tokyo-1050.herokussl.com', {
         rollback: true
       })
       .reply(200, endpoint)
