@@ -258,7 +258,7 @@ Example:
 
 Example (Certificate Intermediary):
 
-     $ heroku certs:add intermediary.crt example.com.crt example.com.key
+    $ heroku certs:add intermediary.crt example.com.crt example.com.key
 `,
   needsApp: true,
   needsAuth: true,

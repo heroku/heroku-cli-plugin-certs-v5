@@ -84,5 +84,9 @@ module.exports = {
   description: 'Show ACM status for an app.',
   needsApp: true,
   needsAuth: true,
-  run: cli.command(co.wrap(run))
+  run: cli.command(co.wrap(run)),
+  help: `Example:
+
+    $ heroku certs:auto --app murmuring-headland-14719
+    === Automatic Certificate Management is disabled on murmuring-headland-14719`
 }
