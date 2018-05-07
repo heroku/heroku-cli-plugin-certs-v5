@@ -68,7 +68,7 @@ function * run (context, heroku) {
       }
 
       columns.push({
-        label: 'Updated',
+        label: 'Last Updated',
         key: 'updated_at',
         format: distanceInWordsToNow
       })

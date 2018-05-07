@@ -59,7 +59,7 @@ Starts At:      2013-08-01 21:34 UTC
 Subject:        /CN=heroku-acm.heroku-cli-sni-test.com
 SSL certificate is not trusted.
 
-Domain                                   Status  Updated
+Domain                                   Status  Last Updated
 ───────────────────────────────────────  ──────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com       OK      less than a minute
 heroku-san-test.heroku-cli-sni-test.com  OK      less than a minute
@@ -104,7 +104,7 @@ Starts At:      2013-08-01 21:34 UTC
 Subject:        /CN=heroku-acm.heroku-cli-sni-test.com
 SSL certificate is not trusted.
 
-Domain                                       Status        Updated
+Domain                                       Status        Last Updated
 ───────────────────────────────────────────  ────────────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com           OK            less than a minute
 heroku-san-test.heroku-cli-sni-test.com      OK            less than a minute
@@ -149,7 +149,7 @@ heroku-unknown.heroku-cli-sni-test.com       Waiting       less than a minute
       expect(cli.stdout).to.equal(
 `=== Automatic Certificate Management is enabled on example
 
-Domain                                   Status   Updated
+Domain                                   Status   Last Updated
 ───────────────────────────────────────  ───────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com       OK       less than a minute
 heroku-san-test.heroku-cli-sni-test.com  OK       less than a minute
@@ -194,7 +194,7 @@ Starts At:      2013-08-01 21:34 UTC
 Subject:        /CN=heroku-acm.heroku-cli-sni-test.com
 SSL certificate is not trusted.
 
-Domain                                   Status  Updated
+Domain                                   Status  Last Updated
 ───────────────────────────────────────  ──────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com       OK      less than a minute
 heroku-san-test.heroku-cli-sni-test.com  OK      less than a minute
@@ -237,7 +237,7 @@ Starts At:      2013-08-01 21:34 UTC
 Subject:        /CN=heroku-acm.heroku-cli-sni-test.com
 SSL certificate is not trusted.
 
-Domain                                   Status   Updated
+Domain                                   Status   Last Updated
 ───────────────────────────────────────  ───────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com       OK       less than a minute
 heroku-san-test.heroku-cli-sni-test.com  OK       less than a minute
@@ -290,7 +290,7 @@ heroku-failed.heroku-cli-sni-test.com    Failing  less than a minute
       expect(cli.stdout).to.equal(
 `=== Automatic Certificate Management is enabled on example
 
-Domain                                  Status   Updated
+Domain                                  Status   Last Updated
 ──────────────────────────────────────  ───────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com      OK       less than a minute
 heroku-failing.heroku-cli-sni-test.com  Failing  less than a minute
@@ -417,7 +417,7 @@ Starts At:      2013-08-01 21:34 UTC
 Subject:        /CN=heroku-acm.heroku-cli-sni-test.com
 SSL certificate is not trusted.
 
-Domain                                 Status  Reason                  Updated
+Domain                                 Status  Reason                  Last Updated
 ─────────────────────────────────────  ──────  ──────────────────────  ──────────────────
 heroku-acm.heroku-cli-sni-test.com     OK                              less than a minute
 heroku-failed.heroku-cli-sni-test.com  Failed  uh oh something failed  less than a minute
