@@ -9,22 +9,12 @@ let distanceInWordsToNow = require('date-fns/distance_in_words_to_now')
 const {default: color} = require('@heroku-cli/color')
 
 function humanize (value) {
-  if (!value) {
-    return color.yellow('Waiting')
-  }
-  if (value === 'ok') {
-    return color.green('OK')
-  }
-  if (value === 'failed') {
-    return color.red('Failed')
-  }
-  // Remove the following lines once we address this in cedar-acm
-  if (value === 'verified') {
-    return color.yellow('In Progress')
-  }
-  if (value === 'dns-verified') {
-    return color.yellow('DNS Verified')
-  }
+  if (!value) return color.yellow('Waiting')
+  if (value === 'ok') return color.green('OK')
+  if (value === 'failing') return color.red('Failing')
+  if (value === 'failed') return color.red('Failed')
+  if (value === 'dns-verified') return color.yellow('DNS Verified')
+  if (value === 'in-progress') return color.yellow('In Progress')
   return value.split('-').map((word) => _.capitalize(word)).join(' ')
 }
 
